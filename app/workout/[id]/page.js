@@ -25,15 +25,15 @@ export default async function WorkoutDetails({ params }) {
     <>
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
 
           {/* Image */}
           <div>
             <img
               src={workout.image}
               alt={workout.name}
-              className="w-full h-[450px] object-cover rounded-xl"
+              className="w-full h-72 sm:h-96 lg:h-[450px] object-cover rounded-2xl"
             />
           </div>
 
@@ -53,7 +53,7 @@ export default async function WorkoutDetails({ params }) {
             </div>
 
             {/* Workout Name */}
-            <h1 className="text-4xl font-bold mt-4">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 leading-tight">
               {workout.name}
             </h1>
 
@@ -71,65 +71,65 @@ export default async function WorkoutDetails({ params }) {
               <div className="border rounded-xl overflow-hidden">
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     EQUIPMENT
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm break-words">
                     {workout.equipment}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     DIFFICULTY
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm">
                     {workout.difficulty}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     SETS
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm">
                     {workout.sets}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     REPS
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm">
                     {workout.reps}
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     DURATION
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm">
                     {workout.duration} min
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2 border-b">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     CALORIES
                   </div>
-                  <div className="p-4 text-sm">
+                  <div className="p-3 sm:p-4 text-sm">
                     {workout.caloriesBurned} kcal
                   </div>
                 </div>
 
                 <div className="grid grid-cols-2">
-                  <div className="p-4 text-sm font-semibold">
+                  <div className="p-3 sm:p-4 text-sm font-semibold">
                     RATING
                   </div>
-                  <div className="p-4 text-sm">
-                    {workout.rating}
+                  <div className="p-3 sm:p-4 text-sm">
+                    ⭐ {workout.rating}
                   </div>
                 </div>
 
