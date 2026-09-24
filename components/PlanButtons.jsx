@@ -1,9 +1,28 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function PlanButtons({ workout }) {
   const [message, setMessage] = useState("");
+  const [planCount, setPlanCount] = useState(0);
+
+  useEffect(() => {
+    function updatePlanCount() {
+      const existingPlan = JSON.parse(
+        localStorage.getItem("fitlog-plan") || "[]"
+      );
+
+      setPlanCount(existingPlan.length);
+    }
+
+    updatePlanCount();
+
+    window.addEventListener("fitlog-storage", updatePlanCount);
+
+    return () => {
+      window.removeEventListener("fitlog-storage", updatePlanCount);
+    };
+  }, []);
 
   function showMessage(text) {
     setMessage(text);
@@ -39,6 +58,8 @@ export default function PlanButtons({ workout }) {
       JSON.stringify(updatedPlan)
     );
 
+    setPlanCount(updatedPlan.length);
+
     window.dispatchEvent(new Event("fitlog-storage"));
 
     showMessage("Added to today's plan!");
@@ -70,6 +91,8 @@ export default function PlanButtons({ workout }) {
     showMessage("Saved for later!");
   }
 
+  const planFull = planCount >= 5;
+
   return (
     <div className="mt-8">
 
@@ -78,9 +101,16 @@ export default function PlanButtons({ workout }) {
 
         <button
           onClick={addToPlan}
-          className="px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition"
+          disabled={planFull}
+          className={`px-6 py-3 rounded-lg transition ${
+            planFull
+              ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+              : "bg-black text-white hover:bg-gray-800"
+          }`}
         >
-          ➕ Add to today&apos;s plan
+          {planFull
+            ? "✓ Today's plan is full"
+            : "➕ Add to today's plan"}
         </button>
 
         <button
