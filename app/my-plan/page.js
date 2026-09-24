@@ -12,18 +12,18 @@ export default function MyPlan() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const savedPlan = JSON.parse(
-    localStorage.getItem("fitlog-plan") || "[]"
-  );
+    const savedPlan = JSON.parse(
+      localStorage.getItem("fitlog-plan") || "[]"
+    );
 
-  const savedWorkouts = JSON.parse(
-    localStorage.getItem("fitlog-saved") || "[]"
-  );
+    const savedWorkouts = JSON.parse(
+      localStorage.getItem("fitlog-saved") || "[]"
+    );
 
-  setPlan(savedPlan);
-  setSaved(savedWorkouts);
-  setLoading(false);
-}, []);
+    setPlan(savedPlan);
+    setSaved(savedWorkouts);
+    setLoading(false);
+  }, []);
 
   useEffect(() => {
     if (!message) return;
@@ -49,34 +49,34 @@ export default function MyPlan() {
   const currentList = activeTab === "plan" ? plan : saved;
 
   function removeWorkout(id) {
-  if (activeTab === "plan") {
-    const updatedPlan = plan.filter(
-      (workout) => workout.id !== id
-    );
+    if (activeTab === "plan") {
+      const updatedPlan = plan.filter(
+        (workout) => workout.id !== id
+      );
 
-    setPlan(updatedPlan);
+      setPlan(updatedPlan);
 
-    localStorage.setItem(
-      "fitlog-plan",
-      JSON.stringify(updatedPlan)
-    );
+      localStorage.setItem(
+        "fitlog-plan",
+        JSON.stringify(updatedPlan)
+      );
 
-    setMessage("Workout removed from today's plan.");
-  } else {
-    const updatedSaved = saved.filter(
-      (workout) => workout.id !== id
-    );
+      setMessage("Workout removed from today's plan.");
+    } else {
+      const updatedSaved = saved.filter(
+        (workout) => workout.id !== id
+      );
 
-    setSaved(updatedSaved);
+      setSaved(updatedSaved);
 
-    localStorage.setItem(
-      "fitlog-saved",
-      JSON.stringify(updatedSaved)
-    );
+      localStorage.setItem(
+        "fitlog-saved",
+        JSON.stringify(updatedSaved)
+      );
 
-    setMessage("Workout removed from saved.");
+      setMessage("Workout removed from saved.");
+    }
   }
-}
 
   function markAsDone(id) {
     const updatedPlan = plan.filter(
@@ -97,7 +97,7 @@ export default function MyPlan() {
     <>
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-6 py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12">
 
         {/* Header */}
         <div>
@@ -109,7 +109,7 @@ export default function MyPlan() {
             MY PLAN
           </h1>
 
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-600 max-w-xl">
             Cap of five lifts for today. Finish them, then load more.
           </p>
         </div>
@@ -117,7 +117,7 @@ export default function MyPlan() {
         {/* Metrics */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
 
-          <div className="border rounded-xl p-5">
+          <div className="border rounded-xl p-5 hover:shadow-md transition">
             <p className="text-sm text-gray-500">
               EXERCISES
             </p>
@@ -127,7 +127,7 @@ export default function MyPlan() {
             </p>
           </div>
 
-          <div className="border rounded-xl p-5">
+          <div className="border rounded-xl p-5 hover:shadow-md transition">
             <p className="text-sm text-gray-500">
               MINUTES
             </p>
@@ -137,7 +137,7 @@ export default function MyPlan() {
             </p>
           </div>
 
-          <div className="border rounded-xl p-5">
+          <div className="border rounded-xl p-5 hover:shadow-md transition">
             <p className="text-sm text-gray-500">
               CALORIES
             </p>
@@ -150,14 +150,14 @@ export default function MyPlan() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-4 mt-10 border-b pb-3">
+        <div className="flex gap-3 mt-10 border-b pb-3">
 
           <button
             onClick={() => setActiveTab("plan")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 rounded-lg font-medium transition ${
               activeTab === "plan"
                 ? "bg-black text-white"
-                : "border"
+                : "border hover:bg-gray-100"
             }`}
           >
             Today&apos;s Plan
@@ -165,10 +165,10 @@ export default function MyPlan() {
 
           <button
             onClick={() => setActiveTab("saved")}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-4 py-2 rounded-lg font-medium transition ${
               activeTab === "saved"
                 ? "bg-black text-white"
-                : "border"
+                : "border hover:bg-gray-100"
             }`}
           >
             Saved
@@ -177,115 +177,132 @@ export default function MyPlan() {
         </div>
 
         {/* Workout List */}
-            {loading ? (
-            <div className="py-20 text-center">
-                <p className="text-lg font-medium">
-                Loading workouts…
-                </p>
-            </div>
-            ) : currentList.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+        {loading ? (
+          <div className="py-20 flex flex-col items-center justify-center">
+            <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
 
-                {currentList.map((workout) => (
-                <div
-                    key={workout.id}
-                    className="border rounded-xl overflow-hidden"
-                >
+            <p className="mt-4 text-lg font-medium">
+              Loading workouts…
+            </p>
+          </div>
+        ) : currentList.length > 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
 
-                    <img
-                    src={workout.image}
-                    alt={workout.name}
-                    className="w-full h-52 object-cover"
-                    />
+            {currentList.map((workout) => (
+              <div
+                key={workout.id}
+                className="border rounded-xl overflow-hidden hover:shadow-lg transition"
+              >
 
-                    <div className="p-5">
+                {/* Image */}
+                <img
+                  src={workout.image}
+                  alt={workout.name}
+                  className="w-full h-52 object-cover"
+                />
 
-                    <h2 className="text-xl font-bold">
-                        {workout.name}
-                    </h2>
+                <div className="p-5">
 
-                    <p className="mt-2 text-sm text-gray-600">
-                        Equipment: {workout.equipment}
-                    </p>
+                  <h2 className="text-xl font-bold">
+                    {workout.name}
+                  </h2>
 
-                    <div className="flex justify-between mt-4 text-sm">
-                        <span>{workout.duration} min</span>
-                        <span>{workout.caloriesBurned} kcal</span>
-                        <span>⭐ {workout.rating}</span>
-                    </div>
+                  <p className="mt-2 text-sm text-gray-600">
+                    Equipment: {workout.equipment}
+                  </p>
 
-                    <div className="flex flex-wrap gap-3 mt-5">
+                  {/* Stats */}
+                  <div className="grid grid-cols-3 gap-2 mt-4 text-sm text-gray-600">
+                    <span className="text-center">
+                      ⏱ {workout.duration} min
+                    </span>
 
-                        <Link
-                        href={`/workout/${workout.id}`}
-                        className="px-4 py-2 border border-black rounded-lg hover:bg-black hover:text-white transition"
+                    <span className="text-center">
+                      🔥 {workout.caloriesBurned} kcal
+                    </span>
+
+                    <span className="text-center">
+                      ⭐ {workout.rating}
+                    </span>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex flex-wrap gap-3 mt-5">
+
+                    <Link
+                      href={`/workout/${workout.id}`}
+                      className="px-4 py-2 border border-black rounded-lg hover:bg-black hover:text-white transition"
+                    >
+                      View Details
+                    </Link>
+
+                    {activeTab === "plan" ? (
+                      <>
+                        <button
+                          onClick={() => markAsDone(workout.id)}
+                          className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
                         >
-                        View Details
-                        </Link>
+                          ✓ Done
+                        </button>
 
-                        {activeTab === "plan" ? (
-                            <>
-                                <button
-                                onClick={() => markAsDone(workout.id)}
-                                className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
-                                >
-                                ✓ Done
-                                </button>
+                        <button
+                          onClick={() => removeWorkout(workout.id)}
+                          className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
+                          title="Remove workout"
+                        >
+                          ✕
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => removeWorkout(workout.id)}
+                        className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
+                        title="Remove saved workout"
+                      >
+                        ✕
+                      </button>
+                    )}
 
-                                <button
-                                onClick={() => removeWorkout(workout.id)}
-                                className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
-                                title="Remove workout"
-                                >
-                                ✕
-                                </button>
-                            </>
-                            ) : (
-                            <button
-                                onClick={() => removeWorkout(workout.id)}
-                                className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
-                                title="Remove saved workout"
-                            >
-                                ✕
-                            </button>
-                        )}
+                  </div>
 
-                    </div>
-
-                    </div>
                 </div>
-                ))}
+              </div>
+            ))}
 
+          </div>
+        ) : (
+          /* Empty State */
+          <div className="mt-10 border rounded-2xl px-6 py-16 sm:py-20 text-center bg-gray-50">
+
+            <div className="text-4xl">
+              🏋️
             </div>
-            ) : (
-            /* Empty State */
-            <div className="text-center py-20">
 
-                <h2 className="text-2xl font-bold">
-                NOTHING HERE YET
-                </h2>
+            <h2 className="text-2xl font-bold mt-4">
+              NOTHING HERE YET
+            </h2>
 
-                <p className="mt-3 text-gray-600">
-                {activeTab === "plan"
-                    ? "Browse the library and add a lift to get today moving."
-                    : "Save a workout from the library to see it here."}
-                </p>
+            <p className="mt-3 text-gray-600 max-w-md mx-auto">
+              {activeTab === "plan"
+                ? "Browse the library and add a lift to get today moving."
+                : "Save a workout from the library to see it here."}
+            </p>
 
-                <Link
-                href="/#library"
-                className="inline-block mt-6 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
-                >
-                Go to workouts
-                </Link>
+            <Link
+              href="/#library"
+              className="inline-block mt-6 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
+            >
+              Go to workouts
+            </Link>
 
-            </div>
-            )}
-      
+          </div>
+        )}
+
       </main>
 
       {/* Toast Notification */}
       {message && (
-        <div className="fixed bottom-6 right-6 z-50 bg-black text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+        <div className="fixed bottom-6 right-4 sm:right-6 z-50 bg-black text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
           {message}
         </div>
       )}
