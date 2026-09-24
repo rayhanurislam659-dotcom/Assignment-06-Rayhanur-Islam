@@ -73,11 +73,11 @@ export default function Home() {
             </p>
 
             <a
-                href="#library"
-                className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
-              >
-                BROWSE WORKOUTS
-                <span className="text-lg">→</span>
+              href="#library"
+              className="inline-flex items-center gap-2 mt-8 px-6 py-3 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
+            >
+              BROWSE WORKOUTS
+              <span className="text-lg">→</span>
             </a>
           </div>
 
@@ -134,7 +134,7 @@ export default function Home() {
         {/* Loading */}
         {loading ? (
           <div className="py-20 flex flex-col items-center justify-center">
-            
+
             <div className="w-10 h-10 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
 
             <p className="mt-4 text-lg font-medium">
@@ -172,10 +172,19 @@ export default function Home() {
                     Equipment: {workout.equipment}
                   </p>
 
-                  <div className="flex justify-between mt-4 text-sm text-gray-600">
-                    <span>⏱ {workout.duration} min</span>
-                    <span>🔥 {workout.caloriesBurned} kcal</span>
-                    <span>⭐ {workout.rating}</span>
+                  {/* Workout Stats */}
+                  <div className="grid grid-cols-3 gap-2 mt-4 text-sm text-gray-600">
+                    <span className="text-center">
+                      ⏱ {workout.duration} min
+                    </span>
+
+                    <span className="text-center">
+                      🔥 {workout.caloriesBurned} kcal
+                    </span>
+
+                    <span className="text-center">
+                      ⭐ {workout.rating}
+                    </span>
                   </div>
 
                 </div>
