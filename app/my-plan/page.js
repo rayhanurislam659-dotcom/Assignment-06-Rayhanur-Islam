@@ -48,6 +48,10 @@ export default function MyPlan() {
 
   const currentList = activeTab === "plan" ? plan : saved;
 
+  function notifyNavbar() {
+    window.dispatchEvent(new Event("fitlog-storage"));
+  }
+
   function removeWorkout(id) {
     if (activeTab === "plan") {
       const updatedPlan = plan.filter(
@@ -61,6 +65,8 @@ export default function MyPlan() {
         JSON.stringify(updatedPlan)
       );
 
+      notifyNavbar();
+
       setMessage("Workout removed from today's plan.");
     } else {
       const updatedSaved = saved.filter(
@@ -73,6 +79,8 @@ export default function MyPlan() {
         "fitlog-saved",
         JSON.stringify(updatedSaved)
       );
+
+      notifyNavbar();
 
       setMessage("Workout removed from saved.");
     }
@@ -89,6 +97,8 @@ export default function MyPlan() {
       "fitlog-plan",
       JSON.stringify(updatedPlan)
     );
+
+    notifyNavbar();
 
     setMessage("Workout marked as done!");
   }
@@ -154,6 +164,7 @@ export default function MyPlan() {
 
           <button
             onClick={() => setActiveTab("plan")}
+            aria-label="Show today's workout plan"
             className={`px-4 py-2 rounded-lg font-medium transition ${
               activeTab === "plan"
                 ? "bg-black text-white"
@@ -165,6 +176,7 @@ export default function MyPlan() {
 
           <button
             onClick={() => setActiveTab("saved")}
+            aria-label="Show saved workouts"
             className={`px-4 py-2 rounded-lg font-medium transition ${
               activeTab === "saved"
                 ? "bg-black text-white"
@@ -231,6 +243,7 @@ export default function MyPlan() {
 
                     <Link
                       href={`/workout/${workout.id}`}
+                      aria-label={`View details for ${workout.name}`}
                       className="px-4 py-2 border border-black rounded-lg hover:bg-black hover:text-white transition"
                     >
                       View Details
@@ -240,6 +253,7 @@ export default function MyPlan() {
                       <>
                         <button
                           onClick={() => markAsDone(workout.id)}
+                          aria-label={`Mark ${workout.name} as done`}
                           className="px-4 py-2 bg-yellow-400 text-black font-semibold rounded-lg hover:bg-yellow-500 transition"
                         >
                           ✓ Done
@@ -247,6 +261,7 @@ export default function MyPlan() {
 
                         <button
                           onClick={() => removeWorkout(workout.id)}
+                          aria-label={`Remove ${workout.name} from today's plan`}
                           className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
                           title="Remove workout"
                         >
@@ -256,6 +271,7 @@ export default function MyPlan() {
                     ) : (
                       <button
                         onClick={() => removeWorkout(workout.id)}
+                        aria-label={`Remove ${workout.name} from saved`}
                         className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white transition"
                         title="Remove saved workout"
                       >
@@ -302,7 +318,11 @@ export default function MyPlan() {
 
       {/* Toast Notification */}
       {message && (
-        <div className="fixed bottom-6 right-4 sm:right-6 z-50 bg-black text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium">
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 right-4 sm:right-6 z-50 bg-black text-white px-5 py-3 rounded-lg shadow-lg text-sm font-medium"
+        >
           {message}
         </div>
       )}
