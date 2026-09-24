@@ -39,6 +39,8 @@ export default function PlanButtons({ workout }) {
       JSON.stringify(updatedPlan)
     );
 
+    window.dispatchEvent(new Event("fitlog-storage"));
+
     showMessage("Added to today's plan!");
   }
 
@@ -62,6 +64,8 @@ export default function PlanButtons({ workout }) {
       "fitlog-saved",
       JSON.stringify(updatedSaved)
     );
+
+    window.dispatchEvent(new Event("fitlog-storage"));
 
     showMessage("Saved for later!");
   }
