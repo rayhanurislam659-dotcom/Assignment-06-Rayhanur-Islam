@@ -28,9 +28,11 @@ export default function Navbar() {
     updateCounts();
 
     window.addEventListener("storage", updateCounts);
+    window.addEventListener("fitlog-storage", updateCounts);
 
     return () => {
       window.removeEventListener("storage", updateCounts);
+      window.removeEventListener("fitlog-storage", updateCounts);
     };
   }, []);
 
